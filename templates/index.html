@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamified Learning App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 Gamified Learning</h1>
+            <p class="tagline">Master any topic in a fun, interactive way!</p>
+        </header>
+
+        <div id="start-screen" class="screen active">
+            <div class="card">
+                <h2>Start Your Learning Journey</h2>
+                <form id="topic-form">
+                    <div class="form-group">
+                        <label for="topic">What do you want to learn?</label>
+                        <input type="text" id="topic" name="topic" placeholder="e.g., Machine Learning, Python Programming, Spanish Grammar" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="familiarity">Your familiarity level</label>
+                        <select id="familiarity" name="familiarity" required>
+                            <option value="">Select level...</option>
+                            <option value="beginner">Beginner - I'm new to this</option>
+                            <option value="intermediate">Intermediate - I know the basics</option>
+                            <option value="advanced">Advanced - I want to deepen my knowledge</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="time">How much time do you have? (minutes)</label>
+                        <input type="number" id="time" name="time" min="5" max="120" value="30" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Start Learning</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="learning-screen" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="progress-fill" class="progress-fill"></div>
+                </div>
+                <span id="progress-text">0% Complete</span>
+            </div>
+
+            <div class="card">
+                <div id="overview-section">
+                    <h2>📚 Overview</h2>
+                    <div id="overview-content"></div>
+                    <button class="btn btn-primary" onclick="showSections()">Continue to Learning Sections</button>
+                </div>
+
+                <div id="sections-list" style="display: none;">
+                    <h2>📖 Learning Sections</h2>
+                    <div id="sections-container"></div>
+                </div>
+
+                <div id="section-detail" style="display: none;">
+                    <button class="btn btn-secondary" onclick="backToSections()">← Back to Sections</button>
+                    <h2 id="section-title"></h2>
+                    <div id="section-content"></div>
+                    <div id="section-points"></div>
+                    <button class="btn btn-primary" onclick="startQuiz()">Take Quiz</button>
+                </div>
+
+                <div id="quiz-section" style="display: none;">
+                    <h2>🎯 Test Your Knowledge</h2>
+                    <div id="quiz-container"></div>
+                    <button class="btn btn-primary" onclick="submitQuiz()">Submit Answers</button>
+                </div>
+
+                <div id="results-section" style="display: none;">
+                    <h2 id="results-title"></h2>
+                    <div id="results-content"></div>
+                    <div class="button-group">
+                        <button class="btn btn-secondary" onclick="backToSections()">Back to Sections</button>
+                        <button class="btn btn-primary" onclick="resetApp()">Learn Something New</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="score-card" class="score-card">
+                <h3>Your Progress</h3>
+                <div class="score-display">
+                    <span class="score-label">Sections Completed:</span>
+                    <span id="sections-completed">0</span>/<span id="total-sections">0</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Generating your personalized learning content...</p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
