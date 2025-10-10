@@ -71,11 +71,11 @@ def generate_content():
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert educator. Create a learning plan. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"content\": \"section content\", \"key_points\": [\"point1\", \"point2\"]}]}"
+                    "content": "You are an expert educator. Create a learning plan. IMPORTANT: Always include a recap/summary section as the LAST section to review all key concepts before the quiz. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"content\": \"section content\", \"key_points\": [\"point1\", \"point2\"]}]}"
                 },
                 {
                     "role": "user",
-                    "content": f"Create a comprehensive learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}"
+                    "content": f"Create a comprehensive learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}. Make sure to include a final recap section that summarizes all the main concepts covered."
                 }
             ],
             response_format={"type": "json_object"},
