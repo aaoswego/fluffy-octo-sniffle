@@ -372,10 +372,22 @@ def submit_interview_quiz():
     total = len(correct_answers)
     percentage = (score / total * 100) if total > 0 else 0
     
+    incorrect_questions = []
+    for i, answer in enumerate(answers):
+        if answer != correct_answers[i]:
+            q = stored_quiz['questions'][i]
+            incorrect_questions.append({
+                'question_number': i + 1,
+                'question': q['question'],
+                'your_answer': q['options'][answer] if 0 <= answer < len(q['options']) else 'Not answered',
+                'correct_answer': q['options'][q['correct_answer']]
+            })
+    
     return jsonify({
         'score': score,
         'total': total,
-        'percentage': percentage
+        'percentage': percentage,
+        'incorrect_questions': incorrect_questions
     })
 
 if __name__ == '__main__':
