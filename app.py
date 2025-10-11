@@ -187,7 +187,7 @@ def generate_quiz():
                 },
                 {
                     "role": "user",
-                    "content": f"Create quiz questions for this section:\nTitle: {section['title']}\nContent: {section['content']}"
+                    "content": f"Create quiz questions about the topic '{topic}' based on this section:\nTitle: {section['title']}\nContent: {section['content']}\n\nIMPORTANT: All questions must be specifically about {topic}."
                 }
             ],
             response_format={"type": "json_object"},
