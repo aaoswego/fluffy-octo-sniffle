@@ -3,6 +3,28 @@ let currentSection = 0;
 let currentQuiz = null;
 let completedSections = [];
 
+function switchMode(mode) {
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+        if (item.getAttribute('data-mode') === mode) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+    
+    const normalMode = document.getElementById('normal-mode');
+    const interviewMode = document.getElementById('interview-mode');
+    
+    if (mode === 'normal') {
+        normalMode.classList.add('active');
+        interviewMode.classList.remove('active');
+    } else if (mode === 'interview') {
+        normalMode.classList.remove('active');
+        interviewMode.classList.add('active');
+    }
+}
+
 document.getElementById('topic-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     

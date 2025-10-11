@@ -7,12 +7,30 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>🎓 Gamified Learning</h1>
-            <p class="tagline">Master any topic in a fun, interactive way!</p>
-        </header>
+    <div class="side-menu">
+        <div class="menu-header">
+            <h3>🎓 Learning Hub</h3>
+        </div>
+        <nav class="menu-nav">
+            <a href="#" class="menu-item active" data-mode="normal" onclick="switchMode('normal')">
+                <span class="menu-icon">📚</span>
+                <span>Normal Learning</span>
+            </a>
+            <a href="#" class="menu-item" data-mode="interview" onclick="switchMode('interview')">
+                <span class="menu-icon">💼</span>
+                <span>Interview Preparation</span>
+            </a>
+        </nav>
+    </div>
 
+    <div class="main-content">
+        <div class="container">
+            <header>
+                <h1>🎓 Gamified Learning</h1>
+                <p class="tagline">Master any topic in a fun, interactive way!</p>
+            </header>
+
+        <div id="normal-mode" class="mode-content active">
         <div id="start-screen" class="screen active">
             <div class="card">
                 <h2>Start Your Learning Journey</h2>
@@ -94,10 +112,21 @@
                 </div>
             </div>
         </div>
+        </div>
+
+        <div id="interview-mode" class="mode-content" style="display: none;">
+            <div class="card">
+                <h2>💼 Interview Preparation</h2>
+                <p style="text-align: center; padding: 40px; color: #666;">
+                    Coming soon! This feature will help you prepare for technical interviews with mock questions and scenarios.
+                </p>
+            </div>
+        </div>
 
         <div id="loading" class="loading">
             <div class="spinner"></div>
             <p>Generating your personalized learning content...</p>
+        </div>
         </div>
     </div>
 

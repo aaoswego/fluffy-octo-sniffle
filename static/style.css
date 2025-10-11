@@ -8,8 +8,80 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
-    padding: 20px;
+    padding: 0;
+    margin: 0;
     color: #333;
+    display: flex;
+}
+
+.side-menu {
+    width: 250px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-header {
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.menu-header h3 {
+    font-size: 1.3em;
+    margin: 0;
+}
+
+.menu-nav {
+    padding: 20px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 20px;
+    color: #555;
+    text-decoration: none;
+    transition: all 0.3s;
+    border-left: 3px solid transparent;
+}
+
+.menu-item:hover {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.menu-item.active {
+    background: rgba(102, 126, 234, 0.15);
+    color: #667eea;
+    border-left-color: #667eea;
+    font-weight: 600;
+}
+
+.menu-icon {
+    font-size: 1.3em;
+    margin-right: 12px;
+}
+
+.main-content {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+.mode-content {
+    display: none;
+}
+
+.mode-content.active {
+    display: block;
 }
 
 .container {

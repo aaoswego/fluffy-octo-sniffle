@@ -12,7 +12,10 @@ Preferred communication style: Simple, everyday language.
 
 ### Frontend Architecture
 - **Technology**: Vanilla JavaScript with HTML/CSS
-- **Design Pattern**: Single Page Application (SPA) with screen-based navigation
+- **Design Pattern**: Single Page Application (SPA) with screen-based navigation and side menu
+- **Navigation**: Side menu with two modes:
+  - **Normal Learning**: Full gamified learning experience with sections and quizzes
+  - **Interview Preparation**: Placeholder for future interview prep functionality
 - **State Management**: Client-side state stored in JavaScript variables (`learningContent`, `currentSection`, `currentQuiz`, `completedSections`)
 - **Rationale**: Keeps the application lightweight and avoids framework overhead for this relatively simple interactive experience
 
