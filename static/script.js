@@ -166,13 +166,15 @@ function displayQuiz() {
         const questionEl = document.createElement('div');
         questionEl.className = 'quiz-question';
         questionEl.innerHTML = `
-            <h4>Question ${qIndex + 1}: ${q.question}</h4>
-            ${q.options.map((option, optIndex) => `
-                <label class="quiz-option">
-                    <input type="radio" name="q${qIndex}" value="${optIndex}">
-                    ${option}
-                </label>
-            `).join('')}
+            <p class="question-text"><strong>Question ${qIndex + 1}:</strong> ${q.question}</p>
+            <div class="options">
+                ${q.options.map((option, optIndex) => `
+                    <label class="option">
+                        <input type="radio" name="q${qIndex}" value="${optIndex}">
+                        <span>${option}</span>
+                    </label>
+                `).join('')}
+            </div>
         `;
         container.appendChild(questionEl);
     });
@@ -381,11 +383,30 @@ function showInterviewResults(result) {
         message = 'Good preparation! Review a few more areas and you\'ll be ready! 👍';
     }
     
+    let incorrectQuestionsHtml = '';
+    if (result.incorrect_questions && result.incorrect_questions.length > 0) {
+        incorrectQuestionsHtml = `
+            <div class="incorrect-section">
+                <h3>❌ Questions to Review (${result.incorrect_questions.length})</h3>
+                <div class="incorrect-list">
+                    ${result.incorrect_questions.map(q => `
+                        <div class="incorrect-item">
+                            <p class="incorrect-question"><strong>Question ${q.question_number}:</strong> ${q.question}</p>
+                            <p class="incorrect-answer"><span class="label-wrong">Your answer:</span> ${q.your_answer}</p>
+                            <p class="correct-answer"><span class="label-correct">Correct answer:</span> ${q.correct_answer}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+    }
+    
     document.getElementById('interview-results-title').textContent = '📊 Interview Preparation Results';
     document.getElementById('interview-results-content').innerHTML = `
         <div class="result-score ${resultClass}">${result.percentage.toFixed(0)}%</div>
         <div class="result-message">${message}</div>
         <p>You answered ${result.score} out of ${result.total} questions correctly.</p>
+        ${incorrectQuestionsHtml}
     `;
 }
 

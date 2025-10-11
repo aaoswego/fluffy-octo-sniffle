@@ -430,3 +430,63 @@ header h1 {
     color: #555;
     margin-bottom: 20px;
 }
+
+.incorrect-section {
+    margin-top: 30px;
+    text-align: left;
+    background: #fff9f0;
+    padding: 20px;
+    border-radius: 10px;
+    border: 2px solid #ffc107;
+}
+
+.incorrect-section h3 {
+    color: #dc3545;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.incorrect-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.incorrect-item {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #dc3545;
+}
+
+.incorrect-question {
+    font-size: 1.05em;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.incorrect-answer {
+    margin: 8px 0;
+    padding: 8px;
+    background: #ffe6e6;
+    border-radius: 5px;
+    color: #333;
+}
+
+.correct-answer {
+    margin: 8px 0;
+    padding: 8px;
+    background: #e6f7e6;
+    border-radius: 5px;
+    color: #333;
+}
+
+.label-wrong {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+.label-correct {
+    font-weight: 600;
+    color: #28a745;
+}
