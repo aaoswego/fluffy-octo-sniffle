@@ -18,10 +18,14 @@ function switchMode(mode) {
     
     if (mode === 'normal') {
         normalMode.classList.add('active');
+        normalMode.style.display = 'block';
         interviewMode.classList.remove('active');
+        interviewMode.style.display = 'none';
     } else if (mode === 'interview') {
         normalMode.classList.remove('active');
+        normalMode.style.display = 'none';
         interviewMode.classList.add('active');
+        interviewMode.style.display = 'block';
     }
 }
 

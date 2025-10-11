@@ -2,7 +2,11 @@
 
 ## Overview
 
-This is a Flask-based web application that creates personalized, gamified learning experiences. Users input a topic they want to learn, their familiarity level, and available time. The app uses OpenAI's GPT model to generate structured learning content with sections, key points, and interactive quizzes to reinforce learning.
+This is a Flask-based web application that creates personalized, gamified learning experiences with two main modes:
+
+1. **Normal Learning**: Users input a topic they want to learn, their familiarity level, and available time. The app uses OpenAI's GPT model to generate structured learning content with sections, key points, and interactive quizzes to reinforce learning.
+
+2. **Interview Preparation**: Users paste a job description and company name to receive 20 AI-generated interview questions tailored to the position, helping them prepare for technical and behavioral interview scenarios.
 
 ## User Preferences
 
@@ -15,7 +19,7 @@ Preferred communication style: Simple, everyday language.
 - **Design Pattern**: Single Page Application (SPA) with screen-based navigation and side menu
 - **Navigation**: Side menu with two modes:
   - **Normal Learning**: Full gamified learning experience with sections and quizzes
-  - **Interview Preparation**: Placeholder for future interview prep functionality
+  - **Interview Preparation**: Job-specific interview quiz with 20 AI-generated questions
 - **State Management**: Client-side state stored in JavaScript variables (`learningContent`, `currentSection`, `currentQuiz`, `completedSections`)
 - **Rationale**: Keeps the application lightweight and avoids framework overhead for this relatively simple interactive experience
 
