@@ -277,6 +277,42 @@ header h1 {
     color: #333;
 }
 
+.question-text {
+    margin-bottom: 15px;
+    font-size: 1.05em;
+    color: #333;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.option {
+    display: block;
+    padding: 12px;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.option:hover {
+    border-color: #667eea;
+    background: #f0f2ff;
+}
+
+.option input[type="radio"] {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.option span {
+    cursor: pointer;
+}
+
 .quiz-option {
     display: block;
     padding: 12px;
