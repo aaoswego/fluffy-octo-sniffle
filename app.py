@@ -279,5 +279,104 @@ def reset():
     session.clear()
     return jsonify({'success': True})
 
+@app.route('/generate-interview-quiz', methods=['POST'])
+def generate_interview_quiz():
+    data = request.json
+    if not data or not isinstance(data, dict):
+        return jsonify({'error': 'Invalid request body'}), 400
+    
+    company = data.get('company')
+    job_description = data.get('job_description')
+    
+    if not company or not job_description:
+        return jsonify({'error': 'Company name and job description are required'}), 400
+    
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-5",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are an expert interviewer. Create 20 multiple choice interview questions based on the job description. Questions should cover technical skills, behavioral scenarios, and company-specific knowledge. Respond with JSON using double quotes in this exact format: {\"questions\": [{\"question\": \"question text\", \"options\": [\"option1\", \"option2\", \"option3\", \"option4\"], \"correct_answer\": 0}]} where correct_answer is the index of the correct option (0-3)."
+                },
+                {
+                    "role": "user",
+                    "content": f"Create 20 interview questions for a position at {company}. Job description:\n\n{job_description}"
+                }
+            ],
+            response_format={"type": "json_object"},
+            max_completion_tokens=8192
+        )
+        
+        raw_quiz = response.choices[0].message.content
+        if not raw_quiz:
+            return jsonify({'error': 'Failed to generate interview questions'}), 500
+        
+        quiz = json.loads(raw_quiz)
+        validated_quiz = validate_quiz(quiz)
+        
+        if not validated_quiz:
+            return jsonify({'error': 'Invalid quiz format generated'}), 500
+        
+        session_id = get_session_id()
+        quiz_key = f'{session_id}_interview_quiz'
+        quiz_storage[quiz_key] = validated_quiz
+        
+        session['company'] = company
+        session['job_description'] = job_description
+        
+        client_quiz = {
+            'questions': [
+                {
+                    'question': q['question'],
+                    'options': q['options']
+                }
+                for q in validated_quiz['questions']
+            ]
+        }
+        
+        return jsonify(client_quiz)
+    except json.JSONDecodeError as e:
+        return jsonify({'error': 'Failed to parse quiz response'}), 500
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@app.route('/submit-interview-quiz', methods=['POST'])
+def submit_interview_quiz():
+    data = request.json
+    if not data or not isinstance(data, dict):
+        return jsonify({'error': 'Invalid request body'}), 400
+    
+    answers = data.get('answers', [])
+    if not isinstance(answers, list):
+        return jsonify({'error': 'Invalid answers format'}), 400
+    
+    try:
+        answers = [int(a) for a in answers]
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid answer values'}), 400
+    
+    session_id = get_session_id()
+    quiz_key = f'{session_id}_interview_quiz'
+    stored_quiz = quiz_storage.get(quiz_key)
+    
+    if not stored_quiz or 'questions' not in stored_quiz:
+        return jsonify({'error': 'Quiz not found'}), 400
+    
+    correct_answers = [q['correct_answer'] for q in stored_quiz['questions']]
+    
+    if len(answers) != len(correct_answers):
+        return jsonify({'error': 'Invalid number of answers'}), 400
+    
+    score = sum(1 for i, answer in enumerate(answers) if answer == correct_answers[i])
+    total = len(correct_answers)
+    percentage = (score / total * 100) if total > 0 else 0
+    
+    return jsonify({
+        'score': score,
+        'total': total,
+        'percentage': percentage
+    })
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
