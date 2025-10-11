@@ -104,7 +104,7 @@ function showSection(index) {
     document.getElementById('section-detail').style.display = 'block';
     
     document.getElementById('section-title').textContent = section.title;
-    document.getElementById('section-content').innerHTML = `<p>${section.content}</p>`;
+    document.getElementById('section-content').innerHTML = section.content;
     
     const pointsEl = document.getElementById('section-points');
     if (section.key_points && section.key_points.length > 0) {

@@ -71,11 +71,11 @@ def generate_content():
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert educator. Create a learning plan. IMPORTANT: Always include a recap/summary section as the LAST section to review all key concepts before the quiz. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"content\": \"section content\", \"key_points\": [\"point1\", \"point2\"]}]}"
+                    "content": "You are an expert educator. Create a detailed learning plan with well-formatted content. IMPORTANT: Always include a recap/summary section as the LAST section to review all key concepts before the quiz. Use HTML formatting in the content field: <p> for paragraphs, <strong> for emphasis, <ul><li> for lists, <br> for line breaks. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"content\": \"HTML formatted content with multiple paragraphs\", \"key_points\": [\"point1\", \"point2\"]}]}"
                 },
                 {
                     "role": "user",
-                    "content": f"Create a comprehensive learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}. Make sure to include a final recap section that summarizes all the main concepts covered."
+                    "content": f"Create a comprehensive, detailed learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}. The content should be substantial and rich - each section should have multiple paragraphs with detailed explanations, examples, and context. Use the full time available to provide thorough coverage. Make sure to include a final recap section that summarizes all the main concepts covered. Format the content with HTML tags for better readability."
                 }
             ],
             response_format={"type": "json_object"},
