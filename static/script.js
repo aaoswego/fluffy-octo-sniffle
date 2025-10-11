@@ -260,3 +260,134 @@ async function resetApp() {
         location.reload();
     }
 }
+
+let interviewQuiz = null;
+
+document.getElementById('interview-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const company = document.getElementById('company-name').value;
+    const jobDescription = document.getElementById('job-description').value;
+    
+    showLoading(true);
+    
+    try {
+        const response = await fetch('/generate-interview-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                company: company,
+                job_description: jobDescription 
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to generate interview questions');
+        }
+        
+        interviewQuiz = await response.json();
+        showInterviewQuiz(company);
+    } catch (error) {
+        alert('Error generating interview questions. Please try again.');
+        console.error(error);
+    } finally {
+        showLoading(false);
+    }
+});
+
+function showInterviewQuiz(company) {
+    document.getElementById('interview-input-screen').classList.remove('active');
+    document.getElementById('interview-quiz-screen').classList.add('active');
+    
+    document.getElementById('interview-info').textContent = `Answer these 20 questions to prepare for your interview at ${company}`;
+    
+    const container = document.getElementById('interview-quiz-container');
+    container.innerHTML = '';
+    
+    interviewQuiz.questions.forEach((q, index) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'quiz-question';
+        questionDiv.innerHTML = `
+            <p class="question-text"><strong>Question ${index + 1}:</strong> ${q.question}</p>
+            <div class="options">
+                ${q.options.map((option, optIndex) => `
+                    <label class="option">
+                        <input type="radio" name="iq${index}" value="${optIndex}">
+                        <span>${option}</span>
+                    </label>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(questionDiv);
+    });
+}
+
+async function submitInterviewQuiz() {
+    const answers = [];
+    
+    interviewQuiz.questions.forEach((q, index) => {
+        const selected = document.querySelector(`input[name="iq${index}"]:checked`);
+        answers.push(selected ? parseInt(selected.value) : -1);
+    });
+    
+    if (answers.some(a => a === -1)) {
+        alert('Please answer all questions before submitting.');
+        return;
+    }
+    
+    showLoading(true);
+    
+    try {
+        const response = await fetch('/submit-interview-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ answers })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to submit interview quiz');
+        }
+        
+        const result = await response.json();
+        showInterviewResults(result);
+    } catch (error) {
+        alert('Error submitting quiz. Please try again.');
+        console.error(error);
+    } finally {
+        showLoading(false);
+    }
+}
+
+function showInterviewResults(result) {
+    document.getElementById('interview-quiz-screen').classList.remove('active');
+    document.getElementById('interview-results-screen').classList.add('active');
+    
+    let resultClass = 'needs-improvement';
+    let message = 'Keep studying! Review the job description and try again.';
+    
+    if (result.percentage >= 80) {
+        resultClass = 'excellent';
+        message = 'Outstanding! You\'re well-prepared for this interview! 🎉';
+    } else if (result.percentage >= 60) {
+        resultClass = 'good';
+        message = 'Good preparation! Review a few more areas and you\'ll be ready! 👍';
+    }
+    
+    document.getElementById('interview-results-title').textContent = '📊 Interview Preparation Results';
+    document.getElementById('interview-results-content').innerHTML = `
+        <div class="result-score ${resultClass}">${result.percentage.toFixed(0)}%</div>
+        <div class="result-message">${message}</div>
+        <p>You answered ${result.score} out of ${result.total} questions correctly.</p>
+    `;
+}
+
+function resetInterview() {
+    document.getElementById('interview-results-screen').classList.remove('active');
+    document.getElementById('interview-input-screen').classList.add('active');
+    document.getElementById('interview-form').reset();
+    interviewQuiz = null;
+}
