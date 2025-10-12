@@ -11,12 +11,25 @@ This is a Flask-based web application that creates personalized, gamified learni
 ## Recent Changes
 
 ### October 12, 2025 (Latest)
+- **Hamburger Menu**: Made side menu hideable with hamburger button
+  - Floating hamburger button in top-left corner
+  - Smooth slide-in/slide-out animation
+  - Main content expands when menu is hidden
+  - Menu starts open by default
+- **Professional Design Update**: Removed all gradients for cleaner, modern look
+  - Clean white/light gray (#f5f7fa) background
+  - Solid blue (#667eea) color scheme throughout
+  - White cards with subtle shadows for depth
+  - Playful bounce animation on completed sections
+  - Professional yet friendly aesthetic
+
+### October 12, 2025 (Earlier)
 - **Explain Like I'm 5 Feature**: Added interactive Q&A section in every learning section
   - Users can ask questions about any part of the section content
   - AI provides simple, child-friendly explanations using GPT-5
   - New `/eli5-explain` endpoint handles explanation generation
   - Located between main content and "Take Quiz" button for easy access
-  - Styled with gradient background and clean UI design
+  - HTML content stripped before sending to AI for cleaner prompts
 - **Quiz Preloading Bug Fix**: Fixed issue where quizzes wouldn't preload when navigating between sections
   - Added quiz cache clearing in `showSection()` function
   - Ensures preloading works correctly for all sections regardless of navigation pattern
