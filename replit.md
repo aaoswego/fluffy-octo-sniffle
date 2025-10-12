@@ -8,6 +8,17 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 2. **Interview Preparation**: Users paste a job description and company name to receive 20 AI-generated interview questions tailored to the position, helping them prepare for technical and behavioral interview scenarios.
 
+## Recent Changes
+
+### October 12, 2025
+- **Quiz Pre-loading Feature**: Implemented background quiz generation when sections open for instant display when clicking "Take Quiz"
+- **Quiz ID System**: Added unique quiz identifiers to prevent race conditions and ensure grading accuracy
+  - `/generate-quiz` endpoint now returns quiz_id along with questions
+  - New `/activate-quiz` endpoint promotes pre-loaded quizzes to active status for grading
+  - Dual storage strategy: quiz ID-based for pre-loaded quizzes, session-based for active quizzes
+- **Incorrect Answers Display**: Added review section in Normal Learning mode showing incorrectly answered questions with color-coded feedback (red for user's answer, green for correct answer)
+- **State Management**: Enhanced client-side state with `currentQuizId` tracking
+
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
@@ -26,8 +37,11 @@ Preferred communication style: Simple, everyday language.
 ### Backend Architecture
 - **Framework**: Flask (Python)
 - **Session Management**: Server-side sessions using Flask's session mechanism with a required `SESSION_SECRET` environment variable
-- **Data Storage**: In-memory dictionary (`quiz_storage`) for temporary quiz data
+- **Data Storage**: In-memory dictionary (`quiz_storage`) for temporary quiz data with dual storage strategy:
+  - Quiz ID-based storage for pre-loaded quizzes
+  - Session-based storage for active quizzes used in grading
 - **Content Validation**: Server-side validation function (`validate_learning_content`) ensures AI-generated content conforms to expected schema
+- **Quiz Activation System**: `/activate-quiz` endpoint promotes pre-loaded quizzes to active status for grading
 - **Rationale**: Flask provides a simple, flexible foundation for this educational tool without unnecessary complexity
 
 ### AI Content Generation
@@ -41,6 +55,8 @@ Preferred communication style: Simple, everyday language.
 - **Progressive Disclosure**: Content revealed section-by-section to avoid overwhelming users
 - **Gamification**: Progress tracking and quiz completion to increase engagement
 - **Validation Layer**: Robust content validation prevents malformed AI responses from breaking the UI
+- **Quiz Pre-loading**: Background quiz generation when sections open for instant display
+- **Quiz ID System**: Unique identifiers track quizzes to prevent race conditions during pre-loading and ensure grading accuracy
 
 ## External Dependencies
 

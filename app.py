@@ -179,6 +179,8 @@ def generate_quiz():
     except (TypeError, ValueError):
         return jsonify({'error': 'Invalid section index type'}), 400
     
+    store_quiz = data.get('store_quiz', True)
+    
     session_id = get_session_id()
     stored_data = content_storage.get(session_id)
     
@@ -224,10 +226,15 @@ def generate_quiz():
             return jsonify({'error': 'Invalid quiz format generated'}), 500
         
         session_id = get_session_id()
-        quiz_key = f'{session_id}_quiz_{section_index}'
-        quiz_storage[quiz_key] = validated_quiz
+        quiz_id = secrets.token_urlsafe(16)
+        quiz_storage[quiz_id] = validated_quiz
+        
+        if store_quiz:
+            quiz_key = f'{session_id}_quiz_{section_index}'
+            quiz_storage[quiz_key] = validated_quiz
         
         client_quiz = {
+            'quiz_id': quiz_id,
             'questions': [
                 {
                     'question': q['question'],
@@ -242,6 +249,32 @@ def generate_quiz():
         return jsonify({'error': 'Failed to parse quiz response'}), 500
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@app.route('/activate-quiz', methods=['POST'])
+def activate_quiz():
+    data = request.json
+    if not data or not isinstance(data, dict):
+        return jsonify({'error': 'Invalid request body'}), 400
+    
+    quiz_id = data.get('quiz_id')
+    if not quiz_id:
+        return jsonify({'error': 'Missing quiz_id'}), 400
+    
+    try:
+        section_index = int(data.get('section_index', 0))
+        if section_index < 0:
+            return jsonify({'error': 'Invalid section index'}), 400
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid section index type'}), 400
+    
+    if quiz_id not in quiz_storage:
+        return jsonify({'error': 'Quiz not found'}), 400
+    
+    session_id = get_session_id()
+    quiz_key = f'{session_id}_quiz_{section_index}'
+    quiz_storage[quiz_key] = quiz_storage[quiz_id]
+    
+    return jsonify({'success': True})
 
 @app.route('/submit-quiz', methods=['POST'])
 def submit_quiz():
@@ -281,6 +314,17 @@ def submit_quiz():
     total = len(correct_answers)
     percentage = (score / total * 100) if total > 0 else 0
     
+    incorrect_questions = []
+    for i, answer in enumerate(answers):
+        if answer != correct_answers[i]:
+            q = stored_quiz['questions'][i]
+            incorrect_questions.append({
+                'question_number': i + 1,
+                'question': q['question'],
+                'your_answer': q['options'][answer] if 0 <= answer < len(q['options']) else 'Not answered',
+                'correct_answer': q['options'][q['correct_answer']]
+            })
+    
     completed = session.get('completed_sections', [])
     if section_index not in completed:
         completed.append(section_index)
@@ -290,7 +334,8 @@ def submit_quiz():
         'score': score,
         'total': total,
         'percentage': percentage,
-        'completed_sections': completed
+        'completed_sections': completed,
+        'incorrect_questions': incorrect_questions
     })
 
 @app.route('/reset', methods=['POST'])

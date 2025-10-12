@@ -1,6 +1,8 @@
 let learningContent = null;
 let currentSection = 0;
 let currentQuiz = null;
+let currentQuizSection = -1;
+let currentQuizId = null;
 let completedSections = [];
 
 function switchMode(mode) {
@@ -121,9 +123,40 @@ function showSection(index) {
     } else {
         pointsEl.innerHTML = '';
     }
+    
+    preloadQuiz(index);
+}
+
+async function preloadQuiz(sectionIndex) {
+    try {
+        const response = await fetch('/generate-quiz', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+                section_index: sectionIndex,
+                store_quiz: false
+            })
+        });
+        
+        if (response.ok) {
+            const quiz = await response.json();
+            if (currentSection === sectionIndex && currentQuiz === null) {
+                currentQuiz = quiz;
+                currentQuizId = quiz.quiz_id;
+                currentQuizSection = sectionIndex;
+            }
+        }
+    } catch (error) {
+        console.log('Quiz preload failed, will generate on demand');
+    }
 }
 
 function backToSections() {
+    currentQuiz = null;
+    currentQuizSection = -1;
+    currentQuizId = null;
     document.getElementById('section-detail').style.display = 'none';
     document.getElementById('quiz-section').style.display = 'none';
     document.getElementById('results-section').style.display = 'none';
@@ -132,6 +165,31 @@ function backToSections() {
 }
 
 async function startQuiz() {
+    if (currentQuiz && currentQuizSection === currentSection && currentQuizId) {
+        showLoading(true);
+        try {
+            const response = await fetch('/activate-quiz', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    quiz_id: currentQuizId,
+                    section_index: currentSection
+                })
+            });
+            
+            if (response.ok) {
+                displayQuiz();
+                showLoading(false);
+                return;
+            }
+        } catch (error) {
+            console.log('Failed to activate preloaded quiz, generating new one');
+        }
+        showLoading(false);
+    }
+    
     showLoading(true);
     
     try {
@@ -140,7 +198,10 @@ async function startQuiz() {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ section_index: currentSection })
+            body: JSON.stringify({ 
+                section_index: currentSection,
+                store_quiz: true
+            })
         });
         
         if (!response.ok) {
@@ -148,6 +209,8 @@ async function startQuiz() {
         }
         
         currentQuiz = await response.json();
+        currentQuizId = currentQuiz.quiz_id;
+        currentQuizSection = currentSection;
         displayQuiz();
     } catch (error) {
         alert('Error generating quiz. Please try again.');
@@ -244,11 +307,32 @@ function showResults(result) {
         ? '<button class="btn-primary" onclick="backToOverview()">📚 Back to Overview</button>'
         : '<button class="btn-primary" onclick="goToNextSection()">Next Section ➡️</button>';
     
+    let incorrectQuestionsHtml = '';
+    if (result.incorrect_questions && result.incorrect_questions.length > 0) {
+        incorrectQuestionsHtml = `
+            <div class="incorrect-questions-section">
+                <h3>📝 Questions to Review</h3>
+                ${result.incorrect_questions.map(q => `
+                    <div class="incorrect-item">
+                        <p class="incorrect-question">${q.question}</p>
+                        <div class="incorrect-answer">
+                            <span class="label-wrong">Your answer:</span> ${q.your_answer}
+                        </div>
+                        <div class="correct-answer">
+                            <span class="label-correct">Correct answer:</span> ${q.correct_answer}
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+    
     document.getElementById('results-title').textContent = '📊 Quiz Results';
     document.getElementById('results-content').innerHTML = `
         <div class="result-score ${resultClass}">${result.percentage.toFixed(0)}%</div>
         <div class="result-message">${message}</div>
         <p>You answered ${result.score} out of ${result.total} questions correctly.</p>
+        ${incorrectQuestionsHtml}
         <div style="margin-top: 20px;">
             ${nextButtonHtml}
         </div>
@@ -260,12 +344,18 @@ function showResults(result) {
 function goToNextSection() {
     const nextIndex = currentSection + 1;
     if (nextIndex < learningContent.sections.length) {
+        currentQuiz = null;
+        currentQuizSection = -1;
+        currentQuizId = null;
         document.getElementById('results-section').style.display = 'none';
         showSection(nextIndex);
     }
 }
 
 function backToOverview() {
+    currentQuiz = null;
+    currentQuizSection = -1;
+    currentQuizId = null;
     document.getElementById('results-section').style.display = 'none';
     document.getElementById('sections-list').style.display = 'block';
     showSections();
