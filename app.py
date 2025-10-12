@@ -310,6 +310,10 @@ def eli5_explain():
     
     section = learning_content['sections'][section_index]
     
+    import re
+    clean_content = re.sub(r'<[^>]+>', '', section['content'])
+    clean_content = re.sub(r'\s+', ' ', clean_content).strip()
+    
     try:
         response = openai_client.chat.completions.create(
             model="gpt-5",
@@ -320,7 +324,7 @@ def eli5_explain():
                 },
                 {
                     "role": "user",
-                    "content": f"Topic: {topic}\nSection: {section['title']}\nSection Content: {section['content']}\n\nQuestion: {question}\n\nPlease explain the answer in simple terms, like you're talking to a 5-year-old."
+                    "content": f"Topic: {topic}\nSection: {section['title']}\nSection Content: {clean_content}\n\nQuestion: {question}\n\nPlease explain the answer in simple terms, like you're talking to a 5-year-old."
                 }
             ],
             max_completion_tokens=500
@@ -332,7 +336,10 @@ def eli5_explain():
         
         return jsonify({'explanation': explanation})
     except Exception as e:
-        return jsonify({'error': str(e)}), 500
+        print(f"ELI5 Error: {str(e)}", flush=True)
+        import traceback
+        traceback.print_exc()
+        return jsonify({'error': f'Failed to generate explanation: {str(e)}'}), 500
 
 @app.route('/submit-quiz', methods=['POST'])
 def submit_quiz():
