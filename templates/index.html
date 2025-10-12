@@ -7,7 +7,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="side-menu">
+    <button class="hamburger-btn" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <div class="side-menu" id="side-menu">
         <div class="menu-header">
             <h3>🎓 Learning Hub</h3>
         </div>

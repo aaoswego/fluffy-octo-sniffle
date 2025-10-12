@@ -6,7 +6,7 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #f5f7fa;
     min-height: 100vh;
     padding: 0;
     margin: 0;
@@ -14,23 +14,62 @@ body {
     display: flex;
 }
 
+.hamburger-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1001;
+    width: 50px;
+    height: 50px;
+    background: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hamburger-btn span {
+    width: 25px;
+    height: 3px;
+    background: #667eea;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+}
+
 .side-menu {
     width: 250px;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: white;
     height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.08);
     display: flex;
     flex-direction: column;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.side-menu.hidden {
+    transform: translateX(-100%);
 }
 
 .menu-header {
     padding: 30px 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: #667eea;
     color: white;
+    border-bottom: 4px solid #5568d3;
 }
 
 .menu-header h3 {
@@ -49,16 +88,16 @@ body {
     color: #555;
     text-decoration: none;
     transition: all 0.3s;
-    border-left: 3px solid transparent;
+    border-left: 4px solid transparent;
 }
 
 .menu-item:hover {
-    background: rgba(102, 126, 234, 0.1);
+    background: #f0f3ff;
     color: #667eea;
 }
 
 .menu-item.active {
-    background: rgba(102, 126, 234, 0.15);
+    background: #f0f3ff;
     color: #667eea;
     border-left-color: #667eea;
     font-weight: 600;
@@ -74,6 +113,12 @@ body {
     width: calc(100% - 250px);
     padding: 20px;
     min-height: 100vh;
+    transition: margin-left 0.3s ease, width 0.3s ease;
+}
+
+.main-content.expanded {
+    margin-left: 0;
+    width: 100%;
 }
 
 .mode-content {
@@ -91,18 +136,23 @@ body {
 
 header {
     text-align: center;
-    color: white;
+    color: #2c3e50;
     margin-bottom: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 header h1 {
     font-size: 2.5em;
     margin-bottom: 10px;
+    color: #667eea;
 }
 
 .tagline {
     font-size: 1.2em;
-    opacity: 0.9;
+    color: #666;
 }
 
 .screen {
@@ -206,9 +256,10 @@ header h1 {
 
 .progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #667eea, #764ba2);
+    background: #667eea;
     width: 0%;
     transition: width 0.5s ease;
+    border-radius: 12px;
 }
 
 #progress-text {
@@ -236,8 +287,17 @@ header h1 {
 }
 
 .section-item.completed {
-    background: #d4edda;
-    border-color: #28a745;
+    background: #e8f5e9;
+    border-color: #4caf50;
+}
+
+.section-item.completed .status {
+    animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
 }
 
 .section-item .status {
@@ -539,9 +599,10 @@ header h1 {
 .eli5-section {
     margin: 30px 0;
     padding: 25px;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    background: #f0f3ff;
     border-radius: 12px;
     border-left: 4px solid #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.1);
 }
 
 .eli5-section h3 {

@@ -4,6 +4,21 @@ let currentQuiz = null;
 let currentQuizSection = -1;
 let currentQuizId = null;
 let completedSections = [];
+let menuOpen = true;
+
+function toggleMenu() {
+    const menu = document.getElementById('side-menu');
+    const mainContent = document.querySelector('.main-content');
+    menuOpen = !menuOpen;
+    
+    if (menuOpen) {
+        menu.classList.remove('hidden');
+        mainContent.classList.remove('expanded');
+    } else {
+        menu.classList.add('hidden');
+        mainContent.classList.add('expanded');
+    }
+}
 
 function switchMode(mode) {
     const menuItems = document.querySelectorAll('.menu-item');
