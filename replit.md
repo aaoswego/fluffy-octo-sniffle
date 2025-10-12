@@ -10,7 +10,18 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 ## Recent Changes
 
-### October 12, 2025
+### October 12, 2025 (Latest)
+- **Explain Like I'm 5 Feature**: Added interactive Q&A section in every learning section
+  - Users can ask questions about any part of the section content
+  - AI provides simple, child-friendly explanations using GPT-5
+  - New `/eli5-explain` endpoint handles explanation generation
+  - Located between main content and "Take Quiz" button for easy access
+  - Styled with gradient background and clean UI design
+- **Quiz Preloading Bug Fix**: Fixed issue where quizzes wouldn't preload when navigating between sections
+  - Added quiz cache clearing in `showSection()` function
+  - Ensures preloading works correctly for all sections regardless of navigation pattern
+
+### October 12, 2025 (Earlier)
 - **Quiz Pre-loading Feature**: Implemented background quiz generation when sections open for instant display when clicking "Take Quiz"
 - **Quiz ID System**: Added unique quiz identifiers to prevent race conditions and ensure grading accuracy
   - `/generate-quiz` endpoint now returns quiz_id along with questions
