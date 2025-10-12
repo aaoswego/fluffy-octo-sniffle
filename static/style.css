@@ -534,3 +534,63 @@ header h1 {
     margin-top: 20px;
     margin-bottom: 10px;
 }
+
+/* ELI5 Section Styles */
+.eli5-section {
+    margin: 30px 0;
+    padding: 25px;
+    background: linear-gradient(135deg, #f5f7fa 0%, #e8eef5 100%);
+    border-radius: 12px;
+    border-left: 4px solid #667eea;
+}
+
+.eli5-section h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+}
+
+.eli5-description {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.95em;
+}
+
+.eli5-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.eli5-input-group input {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.eli5-input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+#eli5-response {
+    margin-top: 20px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#eli5-response h4 {
+    color: #667eea;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+#eli5-answer {
+    line-height: 1.8;
+    color: #444;
+}

@@ -276,6 +276,64 @@ def activate_quiz():
     
     return jsonify({'success': True})
 
+@app.route('/eli5-explain', methods=['POST'])
+def eli5_explain():
+    data = request.json
+    if not data or not isinstance(data, dict):
+        return jsonify({'error': 'Invalid request body'}), 400
+    
+    question = data.get('question', '').strip()
+    if not question:
+        return jsonify({'error': 'Question is required'}), 400
+    
+    try:
+        section_index = int(data.get('section_index', 0))
+        if section_index < 0:
+            return jsonify({'error': 'Invalid section index'}), 400
+    except (TypeError, ValueError):
+        return jsonify({'error': 'Invalid section index type'}), 400
+    
+    session_id = get_session_id()
+    stored_data = content_storage.get(session_id)
+    
+    if not stored_data:
+        return jsonify({'error': 'No learning content found'}), 400
+    
+    learning_content = stored_data.get('learning_content')
+    topic = stored_data.get('topic')
+    
+    if not learning_content or not topic:
+        return jsonify({'error': 'No learning content found'}), 400
+    
+    if section_index >= len(learning_content['sections']):
+        return jsonify({'error': 'Invalid section index'}), 400
+    
+    section = learning_content['sections'][section_index]
+    
+    try:
+        response = openai_client.chat.completions.create(
+            model="gpt-5",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "You are a friendly teacher who explains complex topics in very simple terms, as if explaining to a 5-year-old child. Use simple language, analogies, and examples that a young child would understand. Keep your explanation concise and engaging."
+                },
+                {
+                    "role": "user",
+                    "content": f"Topic: {topic}\nSection: {section['title']}\nSection Content: {section['content']}\n\nQuestion: {question}\n\nPlease explain the answer in simple terms, like you're talking to a 5-year-old."
+                }
+            ],
+            max_completion_tokens=500
+        )
+        
+        explanation = response.choices[0].message.content
+        if not explanation:
+            return jsonify({'error': 'Failed to generate explanation'}), 500
+        
+        return jsonify({'explanation': explanation})
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
 @app.route('/submit-quiz', methods=['POST'])
 def submit_quiz():
     data = request.json

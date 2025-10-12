@@ -124,7 +124,53 @@ function showSection(index) {
         pointsEl.innerHTML = '';
     }
     
+    document.getElementById('eli5-question').value = '';
+    document.getElementById('eli5-response').style.display = 'none';
+    document.getElementById('eli5-answer').innerHTML = '';
+    
+    currentQuiz = null;
+    currentQuizSection = -1;
+    currentQuizId = null;
+    
     preloadQuiz(index);
+}
+
+async function askELI5() {
+    const question = document.getElementById('eli5-question').value.trim();
+    
+    if (!question) {
+        alert('Please enter a question first!');
+        return;
+    }
+    
+    showLoading(true);
+    
+    try {
+        const response = await fetch('/eli5-explain', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                question: question,
+                section_index: currentSection
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to get explanation');
+        }
+        
+        const data = await response.json();
+        
+        document.getElementById('eli5-answer').textContent = data.explanation;
+        document.getElementById('eli5-response').style.display = 'block';
+    } catch (error) {
+        alert('Error getting explanation. Please try again.');
+        console.error(error);
+    } finally {
+        showLoading(false);
+    }
 }
 
 async function preloadQuiz(sectionIndex) {

@@ -85,6 +85,20 @@
                     <h2 id="section-title"></h2>
                     <div id="section-content"></div>
                     <div id="section-points"></div>
+                    
+                    <div class="eli5-section">
+                        <h3>🧒 Explain Like I'm 5</h3>
+                        <p class="eli5-description">Have a question about anything in this section? Ask and get a simple explanation!</p>
+                        <div class="eli5-input-group">
+                            <input type="text" id="eli5-question" placeholder="Ask your question here..." />
+                            <button class="btn btn-secondary" onclick="askELI5()">Ask</button>
+                        </div>
+                        <div id="eli5-response" style="display: none;">
+                            <h4>Answer:</h4>
+                            <div id="eli5-answer"></div>
+                        </div>
+                    </div>
+                    
                     <button class="btn btn-primary" onclick="startQuiz()">Take Quiz</button>
                 </div>
 
