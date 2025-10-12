@@ -239,14 +239,36 @@ function showResults(result) {
         message = 'Good job! You\'re making great progress! 👍';
     }
     
+    const isLastSection = currentSection === learningContent.sections.length - 1;
+    const nextButtonHtml = isLastSection 
+        ? '<button class="btn-primary" onclick="backToOverview()">📚 Back to Overview</button>'
+        : '<button class="btn-primary" onclick="goToNextSection()">Next Section ➡️</button>';
+    
     document.getElementById('results-title').textContent = '📊 Quiz Results';
     document.getElementById('results-content').innerHTML = `
         <div class="result-score ${resultClass}">${result.percentage.toFixed(0)}%</div>
         <div class="result-message">${message}</div>
         <p>You answered ${result.score} out of ${result.total} questions correctly.</p>
+        <div style="margin-top: 20px;">
+            ${nextButtonHtml}
+        </div>
     `;
     
     updateProgress();
+}
+
+function goToNextSection() {
+    const nextIndex = currentSection + 1;
+    if (nextIndex < learningContent.sections.length) {
+        document.getElementById('results-section').style.display = 'none';
+        showSection(nextIndex);
+    }
+}
+
+function backToOverview() {
+    document.getElementById('results-section').style.display = 'none';
+    document.getElementById('sections-list').style.display = 'block';
+    showSections();
 }
 
 function updateProgress() {
