@@ -85,9 +85,11 @@ function showSections() {
         const isCompleted = completedSections.includes(index);
         const sectionEl = document.createElement('div');
         sectionEl.className = `section-item ${isCompleted ? 'completed' : ''}`;
+        const timeText = section.estimated_time ? `${section.estimated_time} min` : '';
         sectionEl.innerHTML = `
             <div>
                 <strong>${section.title}</strong>
+                ${timeText ? `<div class="section-time">${timeText}</div>` : ''}
             </div>
             <span class="status">${isCompleted ? '✅' : '📖'}</span>
         `;

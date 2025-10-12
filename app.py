@@ -14,6 +14,7 @@ app.secret_key = os.environ.get('SESSION_SECRET')
 openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 
 quiz_storage = {}
+content_storage = {}
 
 @app.route('/')
 def index():
@@ -34,8 +35,16 @@ def validate_learning_content(content):
         if not isinstance(section, dict):
             continue
         
+        estimated_time = section.get('estimated_time', 5)
+        if not isinstance(estimated_time, (int, float)):
+            try:
+                estimated_time = int(estimated_time)
+            except:
+                estimated_time = 5
+        
         validated_section = {
             'title': section.get('title', 'Untitled Section') if isinstance(section.get('title'), str) else 'Untitled Section',
+            'estimated_time': int(estimated_time),
             'content': section.get('content', 'Content not available') if isinstance(section.get('content'), str) else 'Content not available',
             'key_points': section.get('key_points', []) if isinstance(section.get('key_points'), list) else []
         }
@@ -71,11 +80,11 @@ def generate_content():
             messages=[
                 {
                     "role": "system",
-                    "content": "You are an expert educator. Create a detailed learning plan with well-formatted content. IMPORTANT: Always include a recap/summary section as the LAST section to review all key concepts before the quiz. Use HTML formatting in the content field: <p> for paragraphs, <strong> for emphasis, <ul><li> for lists, <br> for line breaks. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"content\": \"HTML formatted content with multiple paragraphs\", \"key_points\": [\"point1\", \"point2\"]}]}"
+                    "content": "You are an expert educator. Create a detailed learning plan with well-formatted content. IMPORTANT: Always include a recap/summary section as the LAST section to review all key concepts before the quiz. Use HTML formatting in the content field: <p> for paragraphs, <strong> for emphasis, <ul><li> for lists, <br> for line breaks. Respond with JSON using double quotes in this exact format: {\"overview\": \"brief overview text\", \"sections\": [{\"title\": \"section title\", \"estimated_time\": 5, \"content\": \"HTML formatted content with multiple paragraphs\", \"key_points\": [\"point1\", \"point2\"]}]} where estimated_time is in minutes."
                 },
                 {
                     "role": "user",
-                    "content": f"Create a comprehensive, detailed learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}. The content should be substantial and rich - each section should have multiple paragraphs with detailed explanations, examples, and context. Use the full time available to provide thorough coverage. Make sure to include a final recap section that summarizes all the main concepts covered. Format the content with HTML tags for better readability."
+                    "content": f"Create a comprehensive, detailed learning plan for a {familiarity} level student who has {time_available} minutes to study the topic: {topic}. The content should be substantial and rich - each section should have multiple paragraphs with detailed explanations, examples, and context. Use the full time available to provide thorough coverage. Include estimated_time (in minutes) for each section. Make sure to include a final recap section that summarizes all the main concepts covered. Format the content with HTML tags for better readability."
                 }
             ],
             response_format={"type": "json_object"},
@@ -92,8 +101,12 @@ def generate_content():
         if not validated_content:
             return jsonify({'error': 'Invalid content format generated'}), 500
         
-        session['learning_content'] = validated_content
-        session['topic'] = topic
+        session_id = get_session_id()
+        content_storage[session_id] = {
+            'learning_content': validated_content,
+            'topic': topic
+        }
+        
         session['current_section'] = 0
         session['completed_sections'] = []
         
@@ -166,8 +179,14 @@ def generate_quiz():
     except (TypeError, ValueError):
         return jsonify({'error': 'Invalid section index type'}), 400
     
-    learning_content = session.get('learning_content')
-    topic = session.get('topic')
+    session_id = get_session_id()
+    stored_data = content_storage.get(session_id)
+    
+    if not stored_data:
+        return jsonify({'error': 'No learning content found'}), 400
+    
+    learning_content = stored_data.get('learning_content')
+    topic = stored_data.get('topic')
     
     if not learning_content or not topic:
         return jsonify({'error': 'No learning content found'}), 400
