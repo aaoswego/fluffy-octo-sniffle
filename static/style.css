@@ -332,6 +332,25 @@ header h1 {
     margin: 5px 0;
 }
 
+.category-header {
+    margin: 30px 0 20px 0;
+    padding: 15px 20px;
+    background: #667eea;
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+.category-header:first-child {
+    margin-top: 0;
+}
+
+.category-header h3 {
+    margin: 0;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
 .quiz-question {
     margin-bottom: 25px;
     padding: 20px;

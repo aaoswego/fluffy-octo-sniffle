@@ -487,22 +487,62 @@ function showInterviewQuiz(company) {
     const container = document.getElementById('interview-quiz-container');
     container.innerHTML = '';
     
-    interviewQuiz.questions.forEach((q, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.className = 'quiz-question';
-        questionDiv.innerHTML = `
-            <p class="question-text"><strong>Question ${index + 1}:</strong> ${q.question}</p>
-            <div class="options">
-                ${q.options.map((option, optIndex) => `
-                    <label class="option">
-                        <input type="radio" name="iq${index}" value="${optIndex}">
-                        <span>${option}</span>
-                    </label>
-                `).join('')}
-            </div>
-        `;
-        container.appendChild(questionDiv);
-    });
+    const behavioralQuestions = interviewQuiz.questions.filter(q => q.category === 'behavioral');
+    const technicalQuestions = interviewQuiz.questions.filter(q => q.category === 'technical');
+    
+    let questionNumber = 0;
+    
+    if (behavioralQuestions.length > 0) {
+        const behavioralHeader = document.createElement('div');
+        behavioralHeader.className = 'category-header';
+        behavioralHeader.innerHTML = '<h3>🤝 Behavioral Questions</h3>';
+        container.appendChild(behavioralHeader);
+        
+        behavioralQuestions.forEach((q) => {
+            const originalIndex = interviewQuiz.questions.indexOf(q);
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-question';
+            questionDiv.innerHTML = `
+                <p class="question-text"><strong>Question ${questionNumber + 1}:</strong> ${q.question}</p>
+                <div class="options">
+                    ${q.options.map((option, optIndex) => `
+                        <label class="option">
+                            <input type="radio" name="iq${originalIndex}" value="${optIndex}">
+                            <span>${option}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(questionDiv);
+            questionNumber++;
+        });
+    }
+    
+    if (technicalQuestions.length > 0) {
+        const technicalHeader = document.createElement('div');
+        technicalHeader.className = 'category-header';
+        technicalHeader.innerHTML = '<h3>💻 Technical Questions</h3>';
+        container.appendChild(technicalHeader);
+        
+        technicalQuestions.forEach((q) => {
+            const originalIndex = interviewQuiz.questions.indexOf(q);
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-question';
+            questionDiv.innerHTML = `
+                <p class="question-text"><strong>Question ${questionNumber + 1}:</strong> ${q.question}</p>
+                <div class="options">
+                    ${q.options.map((option, optIndex) => `
+                        <label class="option">
+                            <input type="radio" name="iq${originalIndex}" value="${optIndex}">
+                            <span>${option}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(questionDiv);
+            questionNumber++;
+        });
+    }
 }
 
 async function submitInterviewQuiz() {

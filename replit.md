@@ -10,12 +10,22 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 ## Recent Changes
 
-### October 12, 2025 (Latest)
+### October 19, 2025 (Latest)
+- **Interview Questions Enhancement**: Updated Interview Preparation mode to generate categorized questions
+  - Generates exactly 10 behavioral questions focused on soft skills and teamwork
+  - Generates exactly 10 technical questions based on job-specific requirements
+  - Questions displayed in clearly labeled sections with emoji headers
+  - Backend prompt updated to request specific question categories
+  - Frontend groups questions by category for better organization
+  - Maintains sequential numbering across both categories
+
+### October 12, 2025
 - **Hamburger Menu**: Made side menu hideable with hamburger button
   - Floating hamburger button in top-left corner
   - Smooth slide-in/slide-out animation
   - Main content expands when menu is hidden
   - Menu starts open by default
+  - Learning Hub title positioned below hamburger button
 - **Professional Design Update**: Removed all gradients for cleaner, modern look
   - Clean white/light gray (#f5f7fa) background
   - Solid blue (#667eea) color scheme throughout
