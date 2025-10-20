@@ -7,11 +7,26 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <button class="hamburger-btn" onclick="toggleMenu()" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-    </button>
+    <nav class="top-nav">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <h3>Learning Hub</h3>
+            </div>
+            <div class="nav-menu">
+                <a href="#" class="nav-item active" data-mode="normal" onclick="switchMode('normal')">
+                    <span>Normal Learning</span>
+                </a>
+                <a href="#" class="nav-item" data-mode="interview" onclick="switchMode('interview')">
+                    <span>Interview Preparation</span>
+                </a>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
 
     <div class="side-menu" id="side-menu">
         <div class="menu-header">
