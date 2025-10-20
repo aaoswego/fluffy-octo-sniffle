@@ -11,6 +11,20 @@ This is a Flask-based web application that creates personalized, gamified learni
 ## Recent Changes
 
 ### October 20, 2025 (Latest)
+- **Responsive Navigation Update**: Changed to horizontal top menu for desktop, side menu for mobile
+  - **Desktop Layout**: Top navigation bar with "Learning Hub" logo left, menu items right
+  - **Mobile Layout**: Side menu with hamburger button for smaller screens (<768px)
+  - **Active State**: Black pill-shaped button for active menu item on desktop
+  - **Mobile Behavior**: Side menu slides in from left, auto-closes after selection
+- **Green Accent Colors**: Added green (#22C55E) accents throughout design
+  - **Progress Bar**: Green-to-cyan gradient for visual interest
+  - **Key Points**: Green headers and arrows for emphasis
+  - **Section Hovers**: Green borders and shadows on hover
+  - **ELI5 Section**: Green headers and response indicators
+  - **Score Display**: Green color for completed sections counter
+  - **Mobile Menu**: Green accent on active item border
+
+### October 20, 2025 (Earlier)
 - **Whoop-Inspired Design Overhaul**: Complete redesign to match Whoop's actual website aesthetic
   - **Color Scheme**: White background (#FFFFFF), black text, cyan accent (#00D4D4)
   - **Typography**: Modern system fonts matching Whoop's clean, professional style
