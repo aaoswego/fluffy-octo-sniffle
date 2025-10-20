@@ -10,7 +10,16 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 ## Recent Changes
 
-### October 19, 2025 (Latest)
+### October 20, 2025 (Latest)
+- **Whoop-Inspired Design Overhaul**: Complete redesign to match Whoop's premium, dark aesthetic
+  - **Color Scheme**: Black background (#0B0B0B), white text, signature red accents (#FF0100)
+  - **Typography**: Modern system fonts matching Whoop's clean, bold style with uppercase labels
+  - **Minimalist Design**: Dark cards (#1a1a1a) with subtle borders and high contrast
+  - **Premium Feel**: Sleek, data-focused interface with professional styling
+  - **Interactive Elements**: Red hover states, smooth transitions, bold CTAs
+  - **Dark Theme**: Complete dark mode throughout the entire application
+
+### October 19, 2025
 - **Interview Questions Enhancement**: Updated Interview Preparation mode to generate categorized questions
   - Generates exactly 10 behavioral questions focused on soft skills and teamwork
   - Generates exactly 10 technical questions based on job-specific requirements
