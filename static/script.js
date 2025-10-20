@@ -4,25 +4,16 @@ let currentQuiz = null;
 let currentQuizSection = -1;
 let currentQuizId = null;
 let completedSections = [];
-let menuOpen = true;
 
-function toggleMenu() {
+function toggleMobileMenu() {
     const menu = document.getElementById('side-menu');
-    const mainContent = document.querySelector('.main-content');
-    menuOpen = !menuOpen;
-    
-    if (menuOpen) {
-        menu.classList.remove('hidden');
-        mainContent.classList.remove('expanded');
-    } else {
-        menu.classList.add('hidden');
-        mainContent.classList.add('expanded');
-    }
+    menu.classList.toggle('active');
 }
 
 function switchMode(mode) {
-    const menuItems = document.querySelectorAll('.menu-item');
-    menuItems.forEach(item => {
+    // Update both nav-item (desktop) and menu-item (mobile) classes
+    const allMenuItems = document.querySelectorAll('.menu-item, .nav-item');
+    allMenuItems.forEach(item => {
         if (item.getAttribute('data-mode') === mode) {
             item.classList.add('active');
         } else {
@@ -43,6 +34,12 @@ function switchMode(mode) {
         normalMode.style.display = 'none';
         interviewMode.classList.add('active');
         interviewMode.style.display = 'block';
+    }
+    
+    // Close mobile menu after selecting
+    if (window.innerWidth <= 768) {
+        const menu = document.getElementById('side-menu');
+        menu.classList.remove('active');
     }
 }
 
