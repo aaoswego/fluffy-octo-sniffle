@@ -15,15 +15,13 @@
 
     <div class="side-menu" id="side-menu">
         <div class="menu-header">
-            <h3>🎓 Learning Hub</h3>
+            <h3>Learning Hub</h3>
         </div>
         <nav class="menu-nav">
             <a href="#" class="menu-item active" data-mode="normal" onclick="switchMode('normal')">
-                <span class="menu-icon">📚</span>
                 <span>Normal Learning</span>
             </a>
             <a href="#" class="menu-item" data-mode="interview" onclick="switchMode('interview')">
-                <span class="menu-icon">💼</span>
                 <span>Interview Preparation</span>
             </a>
         </nav>
@@ -32,7 +30,7 @@
     <div class="main-content">
         <div class="container">
             <header>
-                <h1>🎓 Gamified Learning</h1>
+                <h1>Gamified Learning</h1>
                 <p class="tagline">Master any topic in a fun, interactive way!</p>
             </header>
 
@@ -76,13 +74,13 @@
 
             <div class="card">
                 <div id="overview-section">
-                    <h2>📚 Overview</h2>
+                    <h2>Overview</h2>
                     <div id="overview-content"></div>
                     <button class="btn btn-primary" onclick="showSections()">Continue to Learning Sections</button>
                 </div>
 
                 <div id="sections-list" style="display: none;">
-                    <h2>📖 Learning Sections</h2>
+                    <h2>Learning Sections</h2>
                     <div id="sections-container"></div>
                 </div>
 
@@ -93,7 +91,7 @@
                     <div id="section-points"></div>
                     
                     <div class="eli5-section">
-                        <h3>🧒 Explain Like I'm 5</h3>
+                        <h3>Explain Like I'm 5</h3>
                         <p class="eli5-description">Have a question about anything in this section? Ask and get a simple explanation!</p>
                         <div class="eli5-input-group">
                             <input type="text" id="eli5-question" placeholder="Ask your question here..." />
@@ -109,7 +107,7 @@
                 </div>
 
                 <div id="quiz-section" style="display: none;">
-                    <h2>🎯 Test Your Knowledge</h2>
+                    <h2>Test Your Knowledge</h2>
                     <div id="quiz-container"></div>
                     <button class="btn btn-primary" onclick="submitQuiz()">Submit Answers</button>
                 </div>
@@ -137,7 +135,7 @@
         <div id="interview-mode" class="mode-content" style="display: none;">
             <div id="interview-input-screen" class="screen active">
                 <div class="card">
-                    <h2>💼 Interview Test</h2>
+                    <h2>Interview Preparation</h2>
                     <p style="margin-bottom: 20px; color: #666;">
                         Prepare for your interview with AI-generated questions tailored to the job description.
                     </p>
@@ -159,7 +157,7 @@
 
             <div id="interview-quiz-screen" class="screen">
                 <div class="card">
-                    <h2>🎯 Interview Quiz</h2>
+                    <h2>Interview Quiz</h2>
                     <p id="interview-info" style="margin-bottom: 20px; color: #666;"></p>
                     <div id="interview-quiz-container"></div>
                     <button class="btn btn-primary" onclick="submitInterviewQuiz()">Submit Answers</button>

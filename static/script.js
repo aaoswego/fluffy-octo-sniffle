@@ -495,7 +495,7 @@ function showInterviewQuiz(company) {
     if (behavioralQuestions.length > 0) {
         const behavioralHeader = document.createElement('div');
         behavioralHeader.className = 'category-header';
-        behavioralHeader.innerHTML = '<h3>🤝 Behavioral Questions</h3>';
+        behavioralHeader.innerHTML = '<h3>Behavioral Questions</h3>';
         container.appendChild(behavioralHeader);
         
         behavioralQuestions.forEach((q) => {
@@ -521,7 +521,7 @@ function showInterviewQuiz(company) {
     if (technicalQuestions.length > 0) {
         const technicalHeader = document.createElement('div');
         technicalHeader.className = 'category-header';
-        technicalHeader.innerHTML = '<h3>💻 Technical Questions</h3>';
+        technicalHeader.innerHTML = '<h3>Technical Questions</h3>';
         container.appendChild(technicalHeader);
         
         technicalQuestions.forEach((q) => {
@@ -602,7 +602,7 @@ function showInterviewResults(result) {
     if (result.incorrect_questions && result.incorrect_questions.length > 0) {
         incorrectQuestionsHtml = `
             <div class="incorrect-section">
-                <h3>❌ Questions to Review (${result.incorrect_questions.length})</h3>
+                <h3>Questions to Review (${result.incorrect_questions.length})</h3>
                 <div class="incorrect-list">
                     ${result.incorrect_questions.map(q => `
                         <div class="incorrect-item">

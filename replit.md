@@ -18,6 +18,7 @@ This is a Flask-based web application that creates personalized, gamified learni
   - **Premium Feel**: Clean, data-focused interface with professional styling
   - **Interactive Elements**: Cyan hover states, smooth transitions, pill-shaped buttons
   - **Light Theme**: Clean light backgrounds matching Whoop's website sections
+  - **No Icons**: Removed all emoji icons for cleaner, text-only navigation matching Whoop's minimal aesthetic
 
 ### October 19, 2025
 - **Interview Questions Enhancement**: Updated Interview Preparation mode to generate categorized questions
