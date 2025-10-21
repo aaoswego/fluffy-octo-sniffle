@@ -15,6 +15,7 @@ This is a Flask-based web application that creates personalized, gamified learni
   - **Button Color**: Vibrant green background matching accent color throughout app
   - **Hover State**: Darker green (#16A34A) with enhanced shadow for depth
   - **Consistency**: All main action buttons now use green theme
+  - **Navigation Active State**: Active menu item in top navigation now shows green pill button
 
 ### October 20, 2025
 - **Responsive Navigation Update**: Changed to horizontal top menu for desktop, side menu for mobile
