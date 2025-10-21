@@ -222,8 +222,8 @@ header h1 {
 .form-group select:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #00D4D4;
-    box-shadow: 0 0 0 3px rgba(0, 212, 212, 0.1);
+    border-color: #22C55E;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
 }
 
 .form-group textarea {
@@ -262,8 +262,8 @@ header h1 {
 
 .btn-secondary:hover {
     background: #F8F9FA;
-    border-color: #00D4D4;
-    color: #00D4D4;
+    border-color: #22C55E;
+    color: #22C55E;
 }
 
 .screen {
@@ -328,8 +328,8 @@ header h1 {
 }
 
 .section-item.active {
-    border-color: #00D4D4;
-    background: #F8FEFF;
+    border-color: #22C55E;
+    background: #F0FFF4;
 }
 
 .section-item.completed {
@@ -454,13 +454,13 @@ header h1 {
 
 .option:hover {
     background: #FFFFFF;
-    border-color: #00D4D4;
-    box-shadow: 0 2px 8px rgba(0, 212, 212, 0.1);
+    border-color: #22C55E;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.1);
 }
 
 .option input[type="radio"] {
     margin-right: 12px;
-    accent-color: #00D4D4;
+    accent-color: #22C55E;
 }
 
 .option span {
@@ -526,7 +526,7 @@ header h1 {
 
 .spinner {
     border: 4px solid #F0F0F0;
-    border-top: 4px solid #00D4D4;
+    border-top: 4px solid #22C55E;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -650,8 +650,8 @@ header h1 {
 
 .eli5-input-group input:focus {
     outline: none;
-    border-color: #00D4D4;
-    box-shadow: 0 0 0 3px rgba(0, 212, 212, 0.1);
+    border-color: #22C55E;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
 }
 
 #eli5-response {

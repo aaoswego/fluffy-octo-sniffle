@@ -20,7 +20,14 @@ This is a Flask-based web application that creates personalized, gamified learni
   - **Progress Bar**: Green-to-cyan gradient for visual interest
   - **Key Points**: Green headers and arrows for emphasis
   - **Section Hovers**: Green borders and shadows on hover
-  - **ELI5 Section**: Green headers and response indicators
+  - **Active Sections**: Green border and light green background
+  - **Completed Sections**: Green border and light green background
+  - **Input Focus States**: Green border and glow on all form inputs
+  - **Button Hovers**: Green border and text on secondary buttons
+  - **Quiz Options**: Green hover borders and shadows
+  - **Radio Buttons**: Green accent color
+  - **Loading Spinner**: Green spinning animation
+  - **ELI5 Section**: Green headers, response indicators, and input focus
   - **Score Display**: Green color for completed sections counter
   - **Mobile Menu**: Green accent on active item border
 
