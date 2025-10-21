@@ -243,15 +243,15 @@ header h1 {
 }
 
 .btn-primary {
-    background: #000000;
+    background: #22C55E;
     color: #FFFFFF;
-    border-color: #000000;
+    border-color: #22C55E;
 }
 
 .btn-primary:hover {
-    background: #1a1a1a;
+    background: #16A34A;
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
 }
 
 .btn-secondary {

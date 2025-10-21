@@ -10,7 +10,13 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 ## Recent Changes
 
-### October 20, 2025 (Latest)
+### October 21, 2025 (Latest)
+- **Green Primary Buttons**: Changed all primary action buttons from black to green (#22C55E)
+  - **Button Color**: Vibrant green background matching accent color throughout app
+  - **Hover State**: Darker green (#16A34A) with enhanced shadow for depth
+  - **Consistency**: All main action buttons now use green theme
+
+### October 20, 2025
 - **Responsive Navigation Update**: Changed to horizontal top menu for desktop, side menu for mobile
   - **Desktop Layout**: Top navigation bar with "Learning Hub" logo left, menu items right
   - **Mobile Layout**: Side menu with hamburger button for smaller screens (<768px)
