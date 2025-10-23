@@ -444,6 +444,7 @@ let interviewQuiz = null;
 document.getElementById('interview-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     
+    const positionTitle = document.getElementById('position-title').value;
     const company = document.getElementById('company-name').value;
     const jobDescription = document.getElementById('job-description').value;
     
@@ -456,6 +457,7 @@ document.getElementById('interview-form').addEventListener('submit', async (e) =
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ 
+                position_title: positionTitle,
                 company: company,
                 job_description: jobDescription 
             })
@@ -466,7 +468,7 @@ document.getElementById('interview-form').addEventListener('submit', async (e) =
         }
         
         interviewQuiz = await response.json();
-        showInterviewQuiz(company);
+        showInterviewQuiz(positionTitle, company);
     } catch (error) {
         alert('Error generating interview questions. Please try again.');
         console.error(error);
@@ -475,11 +477,11 @@ document.getElementById('interview-form').addEventListener('submit', async (e) =
     }
 });
 
-function showInterviewQuiz(company) {
+function showInterviewQuiz(positionTitle, company) {
     document.getElementById('interview-input-screen').classList.remove('active');
     document.getElementById('interview-quiz-screen').classList.add('active');
     
-    document.getElementById('interview-info').textContent = `Answer these 20 questions to prepare for your interview at ${company}`;
+    document.getElementById('interview-info').textContent = `Answer these 20 questions to prepare for your ${positionTitle} interview at ${company}`;
     
     const container = document.getElementById('interview-quiz-container');
     container.innerHTML = '';

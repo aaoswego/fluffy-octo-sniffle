@@ -6,11 +6,18 @@ This is a Flask-based web application that creates personalized, gamified learni
 
 1. **Normal Learning**: Users input a topic they want to learn, their familiarity level, and available time. The app uses OpenAI's GPT model to generate structured learning content with sections, key points, and interactive quizzes to reinforce learning.
 
-2. **Interview Preparation**: Users paste a job description and company name to receive 20 AI-generated interview questions tailored to the position, helping them prepare for technical and behavioral interview scenarios.
+2. **Interview Preparation**: Users input position title, company name, and job description to receive 20 AI-generated interview questions tailored to the specific position, helping them prepare for technical and behavioral interview scenarios.
 
 ## Recent Changes
 
 ### October 22, 2025 (Latest)
+- **Interview Preparation Enhancement**: Added position title as input field
+  - **New Field**: Position title input field added to interview preparation form
+  - **Enhanced Prompts**: AI now generates questions specifically tailored to the position title
+  - **Better Context**: Questions are more relevant with position-specific technical and behavioral scenarios
+  - **Display Update**: Interview quiz screen now shows position title in the header
+
+### October 22, 2025 (Earlier)
 - **Deployment Configuration Fix**: Properly configured deployment for production
   - **Run Command**: Set up Gunicorn as the production server (`gunicorn --bind=0.0.0.0:5000 --reuse-port app:app`)
   - **Deployment Target**: Configured for autoscale deployment

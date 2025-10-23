@@ -441,12 +441,13 @@ def generate_interview_quiz():
     if not data or not isinstance(data, dict):
         return jsonify({'error': 'Invalid request body'}), 400
 
+    position_title = data.get('position_title')
     company = data.get('company')
     job_description = data.get('job_description')
 
-    if not company or not job_description:
+    if not position_title or not company or not job_description:
         return jsonify(
-            {'error': 'Company name and job description are required'}), 400
+            {'error': 'Position title, company name and job description are required'}), 400
 
     try:
         response = openai_client.chat.completions.create(
@@ -455,13 +456,12 @@ def generate_interview_quiz():
                 "role":
                 "system",
                 "content":
-                "You are a hiring manager working at " + company +
-                ". Create exactly 20 multiple choice realistic interview questions: 10 behavioral questions focused on soft skills, teamwork, and problem-solving scenarios, and 10 technical questions focused on job-specific skills and knowledge from the job description. Respond with JSON using double quotes in this exact format: {\"questions\": [{\"question\": \"question text\", \"options\": [\"option1\", \"option2\", \"option3\", \"option4\"], \"correct_answer\": 0, \"category\": \"behavioral\"}]} where correct_answer is the index of the correct option (0-3) and category is either \"behavioral\" or \"technical\"."
+                f"You are a hiring manager at {company} interviewing candidates for the {position_title} position. Create exactly 20 multiple choice realistic interview questions: 10 behavioral questions focused on soft skills, teamwork, and problem-solving scenarios, and 10 technical questions focused on job-specific skills and knowledge from the job description. Respond with JSON using double quotes in this exact format: {{\"questions\": [{{\"question\": \"question text\", \"options\": [\"option1\", \"option2\", \"option3\", \"option4\"], \"correct_answer\": 0, \"category\": \"behavioral\"}}]}} where correct_answer is the index of the correct option (0-3) and category is either \"behavioral\" or \"technical\"."
             }, {
                 "role":
                 "user",
                 "content":
-                f"Create 20 interview questions for a position at {company} (10 behavioral + 10 technical). Job description:\n\n{job_description}"
+                f"Create 20 interview questions for the {position_title} position at {company} (10 behavioral + 10 technical). Job description:\n\n{job_description}"
             }],
             response_format={"type": "json_object"},
             max_completion_tokens=8192)
@@ -481,6 +481,7 @@ def generate_interview_quiz():
         quiz_key = f'{session_id}_interview_quiz'
         quiz_storage[quiz_key] = validated_quiz
 
+        session['position_title'] = position_title
         session['company'] = company
         session['job_description'] = job_description
 
