@@ -16,6 +16,12 @@ This is a Flask-based web application that creates personalized, gamified learni
   - **Enhanced Prompts**: AI now generates questions specifically tailored to the position title
   - **Better Context**: Questions are more relevant with position-specific technical and behavioral scenarios
   - **Display Update**: Interview quiz screen now shows position title in the header
+  - **Diverse Behavioral Questions**: Enhanced AI prompt to generate varied behavioral questions covering:
+    - Handling difficult situations and conflicts
+    - Leadership, decision-making, and taking initiative
+    - Teamwork, collaboration, and communication
+    - Adaptability, learning from failure, and resilience
+    - Ethics, time management, and stakeholder management
 
 ### October 22, 2025 (Earlier)
 - **Deployment Configuration Fix**: Properly configured deployment for production
