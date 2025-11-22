@@ -22,6 +22,7 @@ def index():
     return render_template('index.html')
 
     //Commenting for fun
+    //Commenting not for fun
 
 
 def validate_learning_content(content):
