@@ -1,0 +1,20 @@
+name: Semgrep Scan
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+jobs:
+  semgrep:
+    name: Scan
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write  # For GitHub Code Scanning alerts
+    steps:
+    - uses: actions/checkout@v4
+    - uses: returntocorp/semgrep-action@v1
+      with:
+        config: auto  # Uses Semgrep's built-in rules
+      env:
+        SEMGREP_RULES_PATH: p/semgrep-rules  # Optional: Community rules for more coverage
