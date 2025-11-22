@@ -21,6 +21,8 @@ content_storage = {}
 def index():
     return render_template('index.html')
 
+    //Commenting for fun
+
 
 def validate_learning_content(content):
     if not isinstance(content, dict):
