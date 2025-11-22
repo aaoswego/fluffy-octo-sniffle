@@ -21,9 +21,8 @@ content_storage = {}
 def index():
     return render_template('index.html')
 
-    //Commenting for fun
-    //Commenting not for fun
 
+API_KEY=123456
 
 def validate_learning_content(content):
     if not isinstance(content, dict):
