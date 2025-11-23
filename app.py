@@ -16,6 +16,7 @@ openai_client = OpenAI(api_key=os.environ.get('OPENAI_API_KEY'))
 quiz_storage = {}
 content_storage = {}
 
+API_KEY=123456
 
 @app.route('/')
 def index():
