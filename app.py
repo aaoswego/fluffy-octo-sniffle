@@ -17,6 +17,7 @@ quiz_storage = {}
 content_storage = {}
 
 API_KEY=123456
+API_KEY="123456"
 
 @app.route('/')
 def index():
